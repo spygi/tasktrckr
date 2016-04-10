@@ -1,5 +1,4 @@
 <resources>
     <string name="app_name">Tasktrckr</string>
     <string name="action_settings">Settings</string>
-    <item type="id" name="button_engineering" />
 </resources>
