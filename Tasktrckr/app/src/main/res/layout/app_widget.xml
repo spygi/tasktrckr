@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="spy.gi.tasktrckr.ExampleAppWidgetProvider"?>
+
+<ListView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <Button
+        android:id="@id/button_engineering"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="Engineering"
+        android:onClick="onEngineeringClick" />
+</ListView>
