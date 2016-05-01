@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity {
+    // AppCompatActivity instead of Activity because it includes already a Toolbar
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
