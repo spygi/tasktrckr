@@ -3,12 +3,13 @@ package spy.gi.tasktrckr;
 import android.app.ListFragment;
 import android.app.LoaderManager;
 import android.content.CursorLoader;
+import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
-import android.provider.Contacts;
-import android.provider.ContactsContract;
-import android.support.v4.app.Fragment;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.provider.BaseColumns;
+import android.provider.ContactsContract;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,23 +20,10 @@ import android.widget.ListAdapter;
 import android.widget.ProgressBar;
 import android.widget.SimpleCursorAdapter;
 
-/**
- * A placeholder fragment containing a simple view.
- */
 public class MainActivityFragment extends ListFragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
     // This is the Adapter being used to display the list's data
     SimpleCursorAdapter mAdapter;
-
-    // These are the Contacts rows that we will retrieve
-    static final String[] PROJECTION = new String[]{ContactsContract.Data._ID,
-            ContactsContract.Data.DISPLAY_NAME};
-
-    // This is the select criteria
-    static final String SELECTION = "((" +
-            ContactsContract.Data.DISPLAY_NAME + " NOTNULL) AND (" +
-            ContactsContract.Data.DISPLAY_NAME + " != '' ))";
-
 
     public MainActivityFragment() {
     }
@@ -44,7 +32,7 @@ public class MainActivityFragment extends ListFragment implements LoaderManager.
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // For the cursor adapter, specify which columns go into which views
-        String[] fromColumns = {ContactsContract.Data.DISPLAY_NAME};
+        String[] fromColumns = {"type"};
         int[] toViews = {android.R.id.text1}; // The TextView in simple_list_item_1
 
         // Create an empty adapter we will use to display the loaded data.
@@ -61,20 +49,26 @@ public class MainActivityFragment extends ListFragment implements LoaderManager.
         return inflater.inflate(R.layout.task_list, container, false);
     }
 
-//    @Override
-//    public void onActivityCreated(Bundle savedInstanceState) {
-//        super.onActivityCreated(savedInstanceState);
-//        ArrayAdapter adapter = ArrayAdapter.createFromResource(getActivity(), R.array.Planets, android.R.layout.simple_list_item_1);
-//        setListAdapter(adapter);
-//        // getListView().setOnItemClickListener(this);
-//    }
-
     // Called when a new Loader needs to be created
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         // Now create and return a CursorLoader that will take care of
         // creating a Cursor for the data being displayed.
-        return new CursorLoader(this.getActivity().getBaseContext(), ContactsContract.Data.CONTENT_URI, PROJECTION, SELECTION, null, null);
+        return new CursorLoader(getActivity().getBaseContext(), null, null, null, null, null) {
+            @Override
+            public Cursor loadInBackground() {
+                SQLiteDatabase taskDb = new TaskDatabaseHelper(getActivity().getBaseContext()).getReadableDatabase();
+                String[] fromColumns = {BaseColumns._ID, "type"}; // _id is required for the SimpleCursorAdapter to work
+                // You can use any query that returns a cursor.
+                try {
+                    Cursor cursor = taskDb.query("tasks", fromColumns, getSelection(), getSelectionArgs(), null, null, getSortOrder(), null);
+                    return cursor;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return null;
+                }
+            }
+        };
     }
 
     // Called when a previously created loader has finished loading
