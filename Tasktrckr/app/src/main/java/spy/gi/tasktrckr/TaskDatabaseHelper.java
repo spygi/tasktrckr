@@ -9,11 +9,11 @@ import android.provider.BaseColumns;
 
 public class TaskDatabaseHelper extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 5;
-    private static final String DICTIONARY_TABLE_NAME = "tasks";
-    private static final String TASK_START = "start";
-    private static final String TASK_END = "end";
-    private static final String TASK_TYPE = "type";
-    private static final String TASK_DESCRIPTION = "description";
+    public static final String DICTIONARY_TABLE_NAME = "tasks";
+    public static final String TASK_START = "start";
+    public static final String TASK_END = "end";
+    public static final String TASK_TYPE = "type";
+    public static final String TASK_DESCRIPTION = "description";
 
     private static final String DICTIONARY_TABLE_CREATE =
             "CREATE TABLE " + DICTIONARY_TABLE_NAME + " (" +

@@ -3,21 +3,14 @@ package spy.gi.tasktrckr;
 import android.app.ListFragment;
 import android.app.LoaderManager;
 import android.content.CursorLoader;
-import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.provider.BaseColumns;
-import android.provider.ContactsContract;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
-import android.widget.ProgressBar;
 import android.widget.SimpleCursorAdapter;
 
 public class MainActivityFragment extends ListFragment implements LoaderManager.LoaderCallbacks<Cursor> {
@@ -26,6 +19,12 @@ public class MainActivityFragment extends ListFragment implements LoaderManager.
     SimpleCursorAdapter mAdapter;
 
     public MainActivityFragment() {
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getLoaderManager().restartLoader(0, null, this);
     }
 
     @Override
@@ -42,10 +41,6 @@ public class MainActivityFragment extends ListFragment implements LoaderManager.
                 fromColumns, toViews, 0);
         setListAdapter(mAdapter);
 
-        // Prepare the loader.  Either re-connect with an existing one,
-        // or start a new one.
-        getLoaderManager().initLoader(0, null, this);
-
         return inflater.inflate(R.layout.task_list, container, false);
     }
 
@@ -57,18 +52,22 @@ public class MainActivityFragment extends ListFragment implements LoaderManager.
         return new CursorLoader(getActivity().getBaseContext(), null, null, null, null, null) {
             @Override
             public Cursor loadInBackground() {
-                SQLiteDatabase taskDb = new TaskDatabaseHelper(getActivity().getBaseContext()).getReadableDatabase();
-                String[] fromColumns = {BaseColumns._ID, "type"}; // _id is required for the SimpleCursorAdapter to work
-                // You can use any query that returns a cursor.
-                try {
-                    Cursor cursor = taskDb.query("tasks", fromColumns, getSelection(), getSelectionArgs(), null, null, getSortOrder(), null);
-                    return cursor;
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    return null;
-                }
+                return loadInBg();
             }
         };
+    }
+
+    private Cursor loadInBg() {
+        SQLiteDatabase taskDb = new TaskDatabaseHelper(getActivity().getBaseContext()).getReadableDatabase();
+        String[] fromColumns = {BaseColumns._ID, "type"}; // _id is required for the SimpleCursorAdapter to work
+        // You can use any query that returns a cursor.
+        try {
+            Cursor cursor = taskDb.query("tasks", fromColumns, null, null, null, null, null, null);
+            return cursor;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     // Called when a previously created loader has finished loading
