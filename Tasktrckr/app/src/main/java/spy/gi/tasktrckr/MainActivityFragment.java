@@ -11,7 +11,12 @@ import android.provider.BaseColumns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+
+import java.text.SimpleDateFormat;
+import java.util.AbstractMap;
 
 public class MainActivityFragment extends ListFragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
@@ -59,7 +64,7 @@ public class MainActivityFragment extends ListFragment implements LoaderManager.
 
     private Cursor loadInBg() {
         SQLiteDatabase taskDb = new TaskDatabaseHelper(getActivity().getBaseContext()).getReadableDatabase();
-        String[] fromColumns = {BaseColumns._ID, "type"}; // _id is required for the SimpleCursorAdapter to work
+        String[] fromColumns = {BaseColumns._ID, "type", "start", "end"}; // _id is required for the SimpleCursorAdapter to work
         // You can use any query that returns a cursor.
         try {
             Cursor cursor = taskDb.query("tasks", fromColumns, null, null, null, null, null, null);
@@ -72,9 +77,14 @@ public class MainActivityFragment extends ListFragment implements LoaderManager.
 
     // Called when a previously created loader has finished loading
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        // Swap the new cursor in.  (The framework will take care of closing the
-        // old cursor once we return.)
-        mAdapter.swapCursor(data);
+        // Find ListView to populate
+        ListView tasks = (ListView) this.getActivity().findViewById(android.R.id.list);
+        // Setup cursor adapter using cursor from last step
+        TaskAdapter taskAdapter = new TaskAdapter(this.getActivity(), data, 0);
+        // Attach cursor adapter to the ListView
+        tasks.setAdapter(taskAdapter);
+
+        mAdapter.swapCursor(null);
     }
 
     // Called when a previously created loader is reset, making the data unavailable

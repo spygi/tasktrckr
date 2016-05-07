@@ -16,9 +16,10 @@
         android:dividerHeight="1dp"
         android:paddingLeft="2dp"></ListView>
 
-        <TextView android:id="@id/android:empty"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#ffffff"
-            android:text="No data"/>
+    <TextView
+        android:id="@id/android:empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#ffffff"
+        android:text="No data" />
 </LinearLayout>
