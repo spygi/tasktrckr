@@ -12,13 +12,12 @@ public class InsertTaskActivity extends AppCompatActivity {
     FragmentPagerAdapter adapterViewPager;
 
     public static class MyPagerAdapter extends FragmentPagerAdapter {
-        private static int NUM_ITEMS = 4; // engineering, team, management and misc
+        private static int NUM_ITEMS = TaskType.values().length;
 
         public MyPagerAdapter(FragmentManager fragmentManager) {
             super(fragmentManager);
         }
 
-        // Returns total number of pages
         @Override
         public int getCount() {
             return NUM_ITEMS;
@@ -27,7 +26,7 @@ public class InsertTaskActivity extends AppCompatActivity {
         // Returns the fragment to display for that page
         @Override
         public Fragment getItem(int position) {
-            return InsertTaskFragment.newInstance(position, "Page # 1");
+            return InsertTaskFragment.newInstance(position);
         }
 
         // Returns the page title for the top indicator

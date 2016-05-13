@@ -12,21 +12,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-/**
- * Created by giannaks on 01/05/16.
- */
 public class InsertTaskFragment extends Fragment {
-    // Store instance variables
-    private String title;
+    private TaskType type;
     private int page;
 
     // newInstance constructor for creating fragment with arguments
-    public static InsertTaskFragment newInstance(int page, String title) {
+    public static InsertTaskFragment newInstance(int page) {
         InsertTaskFragment fragmentFirst = new InsertTaskFragment();
         Bundle args = new Bundle();
-        args.putInt("someInt", page);
-        args.putString("someTitle", title);
+        args.putInt("page", page);
         fragmentFirst.setArguments(args);
+
         return fragmentFirst;
     }
 
@@ -34,8 +30,8 @@ public class InsertTaskFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        page = getArguments().getInt("someInt", 0);
-        title = getArguments().getString("someTitle");
+        page = getArguments().getInt("page", 0);
+        type = TaskType.getTypeFromIndex(page);
     }
 
     // Inflate the view for the fragment based on layout XML
@@ -43,22 +39,22 @@ public class InsertTaskFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.insert_task_fragment, container, false);
-        switch (page) {
-            case 0:
-                view.findViewById(R.id.button).setBackgroundColor(getResources().getColor(R.color.engTask));
+        switch (type) {
+            case ENG:
+                view.findViewById(R.id.button).setBackgroundColor(getResources().getColor(TaskType.ENG.getColor()));
                 break;
-            case 1:
-                view.findViewById(R.id.button).setBackgroundColor(getResources().getColor(R.color.teamTask));
+            case TEAM:
+                view.findViewById(R.id.button).setBackgroundColor(getResources().getColor(TaskType.TEAM.getColor()));
                 break;
-            case 2:
-                view.findViewById(R.id.button).setBackgroundColor(getResources().getColor(R.color.mgmtTask));
+            case MGMT:
+                view.findViewById(R.id.button).setBackgroundColor(getResources().getColor(TaskType.MGMT.getColor()));
                 break;
             default:
-                view.findViewById(R.id.button).setBackgroundColor(getResources().getColor(R.color.miscTask));
+                view.findViewById(R.id.button).setBackgroundColor(getResources().getColor(TaskType.MISC.getColor()));
                 break;
         }
 
-        Button button = (Button)view.findViewById(R.id.button);
+        Button button = (Button) view.findViewById(R.id.button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -67,7 +63,7 @@ public class InsertTaskFragment extends Fragment {
                 ContentValues newTask = new ContentValues();
                 newTask.put(TaskDatabaseHelper.TASK_START, "2016-06-23 23:12");
                 newTask.put(TaskDatabaseHelper.TASK_END, "2016-06-23 23:12");
-                newTask.put(TaskDatabaseHelper.TASK_TYPE, TaskType.ENG.name());
+                newTask.put(TaskDatabaseHelper.TASK_TYPE, type.name());
                 long row = taskDb.insert(TaskDatabaseHelper.DICTIONARY_TABLE_NAME, null, newTask);
 
                 getActivity().finish();
