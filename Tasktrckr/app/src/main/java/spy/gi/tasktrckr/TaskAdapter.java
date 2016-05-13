@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.TextView;
 
+import java.util.Date;
+
 
 public class TaskAdapter extends CursorAdapter {
     public TaskAdapter(Context context, Cursor cursor, int flags) {
@@ -28,14 +30,13 @@ public class TaskAdapter extends CursorAdapter {
         TextView viewStart = (TextView) view.findViewById(R.id.start);
         TextView viewEnd = (TextView) view.findViewById(R.id.end);
 
+        Date start = new Date(cursor.getLong(cursor.getColumnIndexOrThrow(TaskDatabaseHelper.TASK_START)));
+        Date end = new Date(cursor.getLong(cursor.getColumnIndexOrThrow(TaskDatabaseHelper.TASK_END)));
         String type = cursor.getString(cursor.getColumnIndexOrThrow(TaskDatabaseHelper.TASK_TYPE));
-        view.setBackgroundColor(context.getResources().getColor(TaskType.getTypeFromName(type).getColor()));
-
-        String start = cursor.getString(cursor.getColumnIndexOrThrow("start"));
-        String end = cursor.getString(cursor.getColumnIndexOrThrow("end"));
 
         // Populate fields in the view with extracted properties from cursor
-        viewStart.setText(start);
-        viewEnd.setText(end);
+        view.setBackgroundColor(context.getResources().getColor(TaskType.getTypeFromName(type).getColor()));
+        viewStart.setText(start.toString());
+        viewEnd.setText(end.toString());
     }
 }
