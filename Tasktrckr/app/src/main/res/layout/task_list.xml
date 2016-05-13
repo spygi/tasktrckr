@@ -21,5 +21,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#ffffff"
-        android:text="No data" />
+        android:text="Dude, do something already"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 </LinearLayout>
