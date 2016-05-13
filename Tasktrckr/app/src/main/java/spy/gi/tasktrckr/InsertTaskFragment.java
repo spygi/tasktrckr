@@ -67,7 +67,7 @@ public class InsertTaskFragment extends Fragment {
                 ContentValues newTask = new ContentValues();
                 newTask.put(TaskDatabaseHelper.TASK_START, "2016-06-23 23:12");
                 newTask.put(TaskDatabaseHelper.TASK_END, "2016-06-23 23:12");
-                newTask.put(TaskDatabaseHelper.TASK_TYPE, "hello");
+                newTask.put(TaskDatabaseHelper.TASK_TYPE, TaskType.ENG.name());
                 long row = taskDb.insert(TaskDatabaseHelper.DICTIONARY_TABLE_NAME, null, newTask);
 
                 getActivity().finish();

@@ -28,6 +28,13 @@ public class TaskAdapter extends CursorAdapter {
         TextView viewStart = (TextView) view.findViewById(R.id.start);
         TextView viewEnd = (TextView) view.findViewById(R.id.end);
 
+        String type =  cursor.getString(cursor.getColumnIndexOrThrow(TaskDatabaseHelper.TASK_TYPE));
+        for (TaskType typeEnum : TaskType.values()) {
+            if (type.equals(typeEnum.name())) {
+                view.setBackgroundColor(context.getResources().getColor(typeEnum.getColor()));
+            }
+        }
+
         String start = cursor.getString(cursor.getColumnIndexOrThrow("start"));
         String end = cursor.getString(cursor.getColumnIndexOrThrow("end"));
 
