@@ -1,13 +1,9 @@
 package spy.gi.tasktrckr;
 
 import android.content.ContentValues;
-import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.text.format.Time;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,10 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
-import org.w3c.dom.Text;
-
 import java.util.Calendar;
-import java.util.Date;
 
 public class InsertTaskFragment extends Fragment {
     private TaskType type;
@@ -71,12 +64,14 @@ public class InsertTaskFragment extends Fragment {
 
                 TimePicker startPicker = (TimePicker) parentView.findViewById(R.id.startPicker);
                 Calendar calendar = Calendar.getInstance();
-                calendar.set(Calendar.HOUR, startPicker.getCurrentHour());
+                calendar.set(Calendar.HOUR_OF_DAY, startPicker.getCurrentHour());
                 calendar.set(Calendar.MINUTE, startPicker.getCurrentMinute());
+                calendar.set(Calendar.SECOND, 0);
+                calendar.set(Calendar.MILLISECOND, 0);
                 newTask.put(TaskDatabaseHelper.TASK_START, calendar.getTimeInMillis());
 
                 TimePicker endPicker = (TimePicker) parentView.findViewById(R.id.endPicker);
-                calendar.set(Calendar.HOUR, endPicker.getCurrentHour());
+                calendar.set(Calendar.HOUR_OF_DAY, endPicker.getCurrentHour());
                 calendar.set(Calendar.MINUTE, endPicker.getCurrentMinute());
                 newTask.put(TaskDatabaseHelper.TASK_END, calendar.getTimeInMillis());
 
