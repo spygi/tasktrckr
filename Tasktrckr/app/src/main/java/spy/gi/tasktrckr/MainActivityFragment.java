@@ -36,7 +36,7 @@ public class MainActivityFragment extends ListFragment implements LoaderManager.
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // For the cursor adapter, specify which columns go into which views
-        String[] fromColumns = {"type"};
+        String[] fromColumns = {TaskDatabaseHelper.TASK_TYPE};
         int[] toViews = {android.R.id.text1}; // The TextView in simple_list_item_1
 
         // Create an empty adapter we will use to display the loaded data.
@@ -64,7 +64,7 @@ public class MainActivityFragment extends ListFragment implements LoaderManager.
 
     private Cursor loadInBg() {
         SQLiteDatabase taskDb = new TaskDatabaseHelper(getActivity().getBaseContext()).getReadableDatabase();
-        String[] fromColumns = {BaseColumns._ID, "type", "start", "end"}; // _id is required for the SimpleCursorAdapter to work
+        String[] fromColumns = {BaseColumns._ID, "rowid", TaskDatabaseHelper.TASK_TYPE, TaskDatabaseHelper.TASK_START, TaskDatabaseHelper.TASK_END, TaskDatabaseHelper.TASK_DESCRIPTION}; // _id is required for the SimpleCursorAdapter to work
         // You can use any query that returns a cursor.
         try {
             Cursor cursor = taskDb.query("tasks", fromColumns, null, null, null, null, null, null);

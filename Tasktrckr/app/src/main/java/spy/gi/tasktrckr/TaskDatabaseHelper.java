@@ -1,17 +1,16 @@
 package spy.gi.tasktrckr;
 
-import android.content.ContentUris;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.net.Uri;
 import android.provider.BaseColumns;
 
 public class TaskDatabaseHelper extends SQLiteOpenHelper {
-    private static final int DATABASE_VERSION = 5;
+    private static final int DATABASE_VERSION = 12;
     public static final String DICTIONARY_TABLE_NAME = "tasks";
     public static final String TASK_START = "start";
     public static final String TASK_END = "end";
+    public static final String TASK_DURATION = "duration"; // in case of editing a task
     public static final String TASK_TYPE = "type";
     public static final String TASK_DESCRIPTION = "description";
 
@@ -21,7 +20,8 @@ public class TaskDatabaseHelper extends SQLiteOpenHelper {
                     TASK_TYPE + " TEXT, " +
                     TASK_DESCRIPTION + " TEXT, " +
                     TASK_START + " TEXT, " +
-                    TASK_END + " TEXT);";
+                    TASK_END + " TEXT, " +
+                    TASK_DURATION + " TEXT);";
 
     TaskDatabaseHelper(Context context) {
         super(context, context.getString(R.string.app_name), null, DATABASE_VERSION);
