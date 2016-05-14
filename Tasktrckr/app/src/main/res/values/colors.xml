@@ -3,8 +3,8 @@
     <color name="colorPrimary">#363d60</color>
     <color name="colorPrimaryDark">#111630</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="engTask">#d7ffac40</color>
-    <color name="teamTask">#ce40c9ff</color>
-    <color name="mgmtTask">#bc80ff40</color>
-    <color name="miscTask">#c7bcde</color>
+    <color name="engTask">#ffab40</color>
+    <color name="teamTask">#40c4ff</color>
+    <color name="mgmtTask">#b2ff59</color>
+    <color name="miscTask">#d1c4e9</color>
 </resources>
