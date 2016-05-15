@@ -79,7 +79,7 @@ public class InsertTaskFragment extends Fragment {
                 newTask.put(TaskDatabaseHelper.TASK_DESCRIPTION, description.getText().toString());
                 newTask.put(TaskDatabaseHelper.TASK_TYPE, type.name());
 
-                SQLiteDatabase taskDb = new TaskDatabaseHelper(getActivity().getBaseContext()).getWritableDatabase();
+                SQLiteDatabase taskDb =  TaskDatabaseHelper.getInstance(getActivity().getBaseContext()).getWritableDatabase();
                 long row = taskDb.insert(TaskDatabaseHelper.DICTIONARY_TABLE_NAME, null, newTask);
 
                 getActivity().finish();

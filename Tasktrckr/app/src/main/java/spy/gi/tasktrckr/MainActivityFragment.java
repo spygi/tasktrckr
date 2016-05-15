@@ -63,7 +63,7 @@ public class MainActivityFragment extends ListFragment implements LoaderManager.
     }
 
     private Cursor loadInBg() {
-        SQLiteDatabase taskDb = new TaskDatabaseHelper(getActivity().getBaseContext()).getReadableDatabase();
+        SQLiteDatabase taskDb = TaskDatabaseHelper.getInstance(getActivity().getBaseContext()).getReadableDatabase();
         String[] fromColumns = {BaseColumns._ID, "rowid", TaskDatabaseHelper.TASK_TYPE, TaskDatabaseHelper.TASK_START, TaskDatabaseHelper.TASK_END, TaskDatabaseHelper.TASK_DESCRIPTION}; // _id is required for the SimpleCursorAdapter to work
         // You can use any query that returns a cursor.
         try {

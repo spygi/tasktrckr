@@ -7,6 +7,8 @@ import android.provider.BaseColumns;
 
 public class TaskDatabaseHelper extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 12;
+    private static TaskDatabaseHelper mInstance = null;
+
     public static final String DICTIONARY_TABLE_NAME = "tasks";
     public static final String TASK_START = "start";
     public static final String TASK_END = "end";
@@ -20,11 +22,20 @@ public class TaskDatabaseHelper extends SQLiteOpenHelper {
                     TASK_TYPE + " TEXT, " +
                     TASK_DESCRIPTION + " TEXT, " +
                     TASK_START + " TEXT, " +
-                    TASK_END + " TEXT, " +
-                    TASK_DURATION + " TEXT);";
+                    TASK_END + " TEXT);";
 
-    TaskDatabaseHelper(Context context) {
+    private TaskDatabaseHelper(Context context) {
         super(context, context.getString(R.string.app_name), null, DATABASE_VERSION);
+    }
+
+    public static TaskDatabaseHelper getInstance(Context ctx) {
+        // Use the application context, which will ensure that you
+        // don't accidentally leak an Activity's context.
+        // See this article for more information: http://bit.ly/6LRzfx
+        if (mInstance == null) {
+            mInstance = new TaskDatabaseHelper(ctx.getApplicationContext());
+        }
+        return mInstance;
     }
 
     @Override
