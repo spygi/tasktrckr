@@ -12,6 +12,7 @@ import android.widget.CursorAdapter;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
@@ -33,6 +34,7 @@ public class TaskAdapter extends CursorAdapter {
     public void bindView(View view, final Context context, final Cursor cursor) {
         EditText durationView = (EditText) view.findViewById(R.id.duration);
         TextView descriptionView = (TextView) view.findViewById(R.id.description);
+        TextView dateOfTask = (TextView) view.findViewById(R.id.dateOfTask);
 
         durationView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -64,6 +66,7 @@ public class TaskAdapter extends CursorAdapter {
             }
         });
 
+        // calculate duration
         long start = cursor.getLong(cursor.getColumnIndexOrThrow(TaskDatabaseHelper.TASK_START));
         long end = cursor.getLong(cursor.getColumnIndexOrThrow(TaskDatabaseHelper.TASK_END));
         int durationInSeconds = (int) (end - start) / 1000;
@@ -74,14 +77,28 @@ public class TaskAdapter extends CursorAdapter {
             mins = durationInSeconds % 60;
         }
 
+        // put the date if it's new
+        Date startDate = new Date(start);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        if (cursor.getPosition() > 0) {
+            cursor.moveToPrevious();
+            Date startOfPreviousTask = new Date(cursor.getLong(cursor.getColumnIndexOrThrow(TaskDatabaseHelper.TASK_START)));
+            if (sdf.format(startDate).equals(sdf.format(startOfPreviousTask))) { // hacky: compare dates based on their string representation
+                startDate = null;
+            }
+            cursor.moveToNext(); // fix the cursor's position
+        }
+
         String type = cursor.getString(cursor.getColumnIndexOrThrow(TaskDatabaseHelper.TASK_TYPE));
         String description = cursor.getString(cursor.getColumnIndexOrThrow(TaskDatabaseHelper.TASK_DESCRIPTION));
         String rowId = cursor.getString(cursor.getColumnIndexOrThrow("rowid"));
 
-        // Populate fields in the view with extracted properties from cursor
+        view.setTag(rowId);
         view.setBackgroundColor(context.getResources().getColor(TaskType.getTypeFromName(type).getColor()));
         durationView.setText(hours + "h " + mins + "m");
         descriptionView.setText(description);
-        view.setTag(rowId);
+        if (startDate != null) {
+            dateOfTask.setText(sdf.format(startDate));
+        }
     }
 }

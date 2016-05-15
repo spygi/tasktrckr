@@ -67,7 +67,7 @@ public class MainActivityFragment extends ListFragment implements LoaderManager.
         String[] fromColumns = {BaseColumns._ID, "rowid", TaskDatabaseHelper.TASK_TYPE, TaskDatabaseHelper.TASK_START, TaskDatabaseHelper.TASK_END, TaskDatabaseHelper.TASK_DESCRIPTION}; // _id is required for the SimpleCursorAdapter to work
         // You can use any query that returns a cursor.
         try {
-            Cursor cursor = taskDb.query("tasks", fromColumns, null, null, null, null, null, null);
+            Cursor cursor = taskDb.query("tasks", fromColumns, null, null, null, null, null, null); // TODO: sort by date
             return cursor;
         } catch (Exception e) {
             e.printStackTrace();
@@ -85,6 +85,7 @@ public class MainActivityFragment extends ListFragment implements LoaderManager.
         tasks.setAdapter(taskAdapter);
 
         mAdapter.swapCursor(null);
+
     }
 
     // Called when a previously created loader is reset, making the data unavailable
