@@ -30,7 +30,7 @@ public class TaskAdapter extends CursorAdapter {
     // The bindView method is used to bind all data to a given view
     // such as setting the text on a TextView.
     @Override
-    public void bindView(View view, final Context context, Cursor cursor) {
+    public void bindView(View view, final Context context, final Cursor cursor) {
         EditText durationView = (EditText) view.findViewById(R.id.duration);
         TextView descriptionView = (TextView) view.findViewById(R.id.description);
 
@@ -38,7 +38,8 @@ public class TaskAdapter extends CursorAdapter {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 EditText newDuration = (EditText) v.findViewById(R.id.duration);
-                String rowId = (String) v.getTag();
+                View parent = (View) v.getParent();
+                String rowId = (String) parent.getTag();
                 if (!hasFocus) {
                     ContentValues updatedTask = new ContentValues();
                     updatedTask.put(TaskDatabaseHelper.TASK_DURATION, "20");
@@ -46,6 +47,20 @@ public class TaskAdapter extends CursorAdapter {
                     SQLiteDatabase taskDb = new TaskDatabaseHelper(context).getWritableDatabase();
                     taskDb.update(TaskDatabaseHelper.DICTIONARY_TABLE_NAME, updatedTask, String.format("%s = ?", "rowid"), new String[]{rowId});
                 }
+            }
+        });
+
+        TextView deleteView = (TextView) view.findViewById(R.id.deleteTask);
+        deleteView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                View parent = (View) v.getParent();
+                String rowId = (String) parent.getTag();
+                SQLiteDatabase taskDb = new TaskDatabaseHelper(context).getWritableDatabase();
+                taskDb.delete(TaskDatabaseHelper.DICTIONARY_TABLE_NAME, String.format("%s = ?", "rowid"), new String[]{rowId});
+
+                cursor.requery();
+                notifyDataSetChanged();
             }
         });
 
@@ -67,6 +82,6 @@ public class TaskAdapter extends CursorAdapter {
         view.setBackgroundColor(context.getResources().getColor(TaskType.getTypeFromName(type).getColor()));
         durationView.setText(hours + "h " + mins + "m");
         descriptionView.setText(description);
-        durationView.setTag(rowId);
+        view.setTag(rowId);
     }
 }
