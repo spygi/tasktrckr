@@ -38,19 +38,19 @@
         android:id="@+id/taskEnd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/description"
-        android:layout_toEndOf="@+id/description"
         android:inputType="time"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_alignTop="@+id/taskStart"
+        android:layout_toEndOf="@+id/textView" />
 
     <TextView
         android:id="@+id/description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/taskStart"
-        android:layout_alignEnd="@+id/textView"
-        android:layout_alignTop="@+id/taskStart"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:text=""
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_below="@+id/deleteTask"
+        android:layout_toEndOf="@+id/taskEnd" />
 
     <TextView
         android:id="@+id/deleteTask"
