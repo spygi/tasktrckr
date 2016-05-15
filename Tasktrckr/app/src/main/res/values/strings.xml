@@ -1,15 +1,7 @@
 <resources>
     <string name="app_name">Tasktrckr</string>
     <string name="action_settings">Settings</string>
-    <string-array name="Planets">
-        <item>Sun</item>
-        <item>Mercury</item>
-        <item>Venus</item>
-        <item>Earth</item>
-        <item>Mars</item>
-        <item>Jupiter</item>
-        <item>Saturn</item>
-        <item>Uranus</item>
-        <item>Neptune</item>
-    </string-array>
+    <string name="tag_row_id">rowid</string>
+    <string name="tag_task_date">taskDate</string>
+    <string name="tag_database_field_to_update">dbFieldToUpdate</string>
 </resources>

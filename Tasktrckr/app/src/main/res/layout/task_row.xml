@@ -5,44 +5,64 @@
     android:clickable="false">
 
 
-    <EditText
-        android:id="@+id/duration"
-        android:layout_width="100dp"
+    <TextView
+        android:id="@+id/dateOfTask"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="time"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:layout_below="@+id/dateOfTask"
+        android:text=""
+        android:textAllCaps="true"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:layout_alignParentTop="true"
         android:layout_alignParentStart="true" />
+
+    <EditText
+        android:id="@+id/taskStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/dateOfTask"
+        android:inputType="time"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignBaseline="@+id/description"
+        android:layout_alignBottom="@+id/description"
+        android:layout_toEndOf="@+id/taskStart"
+        android:text="_"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <EditText
+        android:id="@+id/taskEnd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/description"
+        android:layout_toEndOf="@+id/description"
+        android:inputType="time"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
         android:id="@+id/description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/duration"
-        android:layout_toEndOf="@+id/duration"
+        android:layout_alignBottom="@+id/taskStart"
+        android:layout_alignEnd="@+id/textView"
+        android:layout_alignTop="@+id/taskStart"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
         android:id="@+id/deleteTask"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:width="32dp"
+        android:height="32dp"
+        android:clickable="true"
         android:paddingRight="@dimen/fab_margin"
         android:text="×"
-        android:height="32dp"
-        android:textSize="32dp"
-        android:clickable="true"
-        android:width="32dp"
-        android:layout_above="@+id/description"
-        android:layout_alignParentEnd="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text=""
-        android:textAllCaps="true"
-        android:id="@+id/dateOfTask"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
+        android:textSize="32dp" />
 
 </RelativeLayout>

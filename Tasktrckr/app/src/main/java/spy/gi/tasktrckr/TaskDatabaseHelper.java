@@ -6,13 +6,12 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
 
 public class TaskDatabaseHelper extends SQLiteOpenHelper {
-    private static final int DATABASE_VERSION = 12;
+    private static final int DATABASE_VERSION = 13;
     private static TaskDatabaseHelper mInstance = null;
 
     public static final String DICTIONARY_TABLE_NAME = "tasks";
     public static final String TASK_START = "start";
     public static final String TASK_END = "end";
-    public static final String TASK_DURATION = "duration"; // in case of editing a task
     public static final String TASK_TYPE = "type";
     public static final String TASK_DESCRIPTION = "description";
 
