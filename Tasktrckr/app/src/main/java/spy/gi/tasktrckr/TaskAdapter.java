@@ -37,7 +37,7 @@ public class TaskAdapter extends CursorAdapter {
         TextView dateOfTask = (TextView) view.findViewById(R.id.dateOfTask);
         EditText taskStart = (EditText) view.findViewById(R.id.taskStart);
         EditText taskEnd = (EditText) view.findViewById(R.id.taskEnd);
-        TextView descriptionView = (TextView) view.findViewById(R.id.description);
+        EditText descriptionView = (EditText) view.findViewById(R.id.description);
         TextView deleteView = (TextView) view.findViewById(R.id.deleteTask);
 
         // listeners
@@ -78,6 +78,7 @@ public class TaskAdapter extends CursorAdapter {
         taskEnd.setText(timeFormatter.format(endDate));
         taskEnd.setTag(R.string.tag_database_field_to_update, TaskDatabaseHelper.TASK_END);
         descriptionView.setText(description);
+        deleteView.bringToFront();
     }
 
     private boolean shouldUseTheStartDateOfTheTask(Cursor cursor, Date startDate) {

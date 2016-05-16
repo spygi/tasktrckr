@@ -15,14 +15,16 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Start"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:textAllCaps="true"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="End"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:textAllCaps="true"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
     </TableRow>
 
     <TableRow
@@ -51,8 +53,8 @@
         android:layout_alignParentStart="true"
         android:layout_centerVertical="true"
         android:layout_weight="0.19"
-        android:inputType="textMultiLine"
-        android:hint="Mind telling us more?" />
+        android:hint="Mind telling us more?"
+        android:inputType="textMultiLine" />
 
     <Button
         android:id="@+id/button"
